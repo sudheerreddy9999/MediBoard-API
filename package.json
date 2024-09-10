@@ -1,0 +1,39 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "local": "nodemon server.js",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format:check": "prettier --check.",
+    "format:fix": "prettier --write .",
+    "test": "echo \"Error: no test specified"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "express": "^4.19.2",
+    "express-validator": "^7.2.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0",
+    "postgres": "^3.4.4",
+    "prettier": "^3.3.3",
+    "properties-reader": "^2.3.0",
+    "sequelize": "^6.37.3",
+    "swagger-ui-express": "^5.0.1",
+    "yaml": "^2.5.1"
+  }
+}
