@@ -20,7 +20,7 @@ const GetUserByEmailDTO = async (email) => {
 
 const AddNewUser = async (first_name, last_name, email, password, mobile_number) => {
   try {
-    const query = DB.ADDNEWUSER.ADD_NEW_USER;
+    const query = DB.QUERY.ADD_NEW_USER;
     const replacements = {
       first_name: first_name,
       last_name: last_name,

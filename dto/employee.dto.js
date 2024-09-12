@@ -12,7 +12,7 @@ const AddNewEmployeeDTO = async (
   mobile_number,
 ) => {
   try {
-    const query = DB.ADDNEWEMPLOYEE.ADD_NEW_EMPLOYEE;
+    const query = DB.QUERY.ADD_NEW_EMPLOYEE;
     const replacements = {
       password: hashedPassword,
       first_name: first_name?first_name.trim():null,
@@ -33,7 +33,7 @@ const AddNewEmployeeDTO = async (
 
 const GetEmployeeDto = async (email, number) => {
   try {
-    const query = DB.GETEMPLOYEEBYEMAIL.GET_EMPLOYEE_EMAIL;
+    const query = DB.QUERY.GET_EMPLOYEE_EMAIL;
     const data = await pgsql.query(query, {
       type: pgsql.QueryTypes.SELECT,
       replacements: { email: email ? email : null, mobile_number: number ? number : null },

@@ -1,10 +1,12 @@
 'use strict'
 import properties from '../index.config.js';
 
-const QUERY = { GET_USER_BY_EMAIL: properties.get('query.get_userbyemail') };
-const ADDNEWUSER = {ADD_NEW_USER: properties.get('query.post_newuser')}
-const ADDNEWEMPLOYEE = {ADD_NEW_EMPLOYEE: properties.get('query.post_newemployee')}
-const GETEMPLOYEEBYEMAIL = {GET_EMPLOYEE_EMAIL:properties.get('query.get_employee_email')}
+const QUERY = { GET_USER_BY_EMAIL: properties.get('query.get_userbyemail'),
+    POST_APPOINTMENT:properties.get('query.post_appointment'),
+    GET_EMPLOYEE_EMAIL:properties.get('query.get_employee_email'),
+    ADD_NEW_EMPLOYEE: properties.get('query.post_newemployee'),
+    ADD_NEW_USER: properties.get('query.post_newuser')
+ };
 
-const DB = { QUERY,ADDNEWUSER,ADDNEWEMPLOYEE,GETEMPLOYEEBYEMAIL };
+const DB = { QUERY };
 export default DB;
