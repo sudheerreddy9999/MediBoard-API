@@ -9,34 +9,44 @@ import cors from 'cors';
 import helmet from 'helmet';
 import pgsql from './config/database/database.config.js';
 import Router from './routes/index.routes.js';
-import SwaggerUi from 'swagger-ui-express';
 import OpenApi from './utility/swagger.utility.js';
+import logger from './utility/logger.utility.js';
 
 const app = express();
 
 app.use(express.json());
+
 app.use(helmet());
+
 app.use(cors());
+
 app.use(express.urlencoded({ extended: false }));
+
 app.use("/api-docs",OpenApi.serve,OpenApi.docPath);
+
 app.use(Router);
+
 const databaseConnection = async () => {
   try {
     await pgsql.authenticate();
-    console.info('Database connected sucessfully');
+    logger.info('Database connected sucessfully')
+    //console.info('Database connected sucessfully');
   } catch (error) {
-    console.error(` database connection faild with ${error.message}`)
+    logger.error(` database connection faild with ${error.message}`)
   }
 };
+
 const StartServer = () => {
   try {
     app.listen(AppConfig.PORT, () => {
-      console.info(`${AppConfig.APPNAME} is listening on port ${AppConfig.PORT}`);
+      logger.info(`${AppConfig.APPNAME} is listening on port ${AppConfig.PORT}`);
     });
   } catch (error) {
-    console.error(`Error while starting server ${error.message}`);
+    logger.error(`Error while starting server ${error.message}`);
     process.exit(-1);
   }
 };
+
+
 databaseConnection();
 StartServer();

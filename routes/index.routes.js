@@ -8,15 +8,16 @@ import validators from '../middlewares/validators/auth.validation.js';
 import employeeValidations from '../middlewares/validators/employee.validation.js';
 import AppointmentsController from '../controllers/appointments.controller.js';
 import DoctorsControllers from '../controllers/doctors.controllers.js';
+import DoctorValidations from '../middlewares/validators/doctor.validation.js';
 
-const app = express();
 const Router = express.Router();
 
 Router.get('/auth', validators.loginValidation, AuthController.GetAuthController);
 Router.post('/add', AuthController.AddNewUser);
-Router.post('/appointments/add',AppointmentsController.AddAppointMentController);
+Router.post('/appointments/add', AppointmentsController.AddAppointMentController);
 Router.get('/employee/auth', employeeValidations.employeeAuthValidators, EmployeeController.GetEmployeeAuthController);
-Router.get('/doctors/get',DoctorsControllers.GetDoctorsControllers);
+Router.get('/doctors/auth', DoctorValidations.DoctorAuth, DoctorsControllers.GetDoctorAuthControllers);
 Router.use(JWT.VerifyToken);
-Router.post('/employee/add',employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
+Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
+Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
 export default Router;

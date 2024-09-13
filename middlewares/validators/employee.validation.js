@@ -1,4 +1,3 @@
-import { request, response } from 'express';
 import { body, header, validationResult } from 'express-validator';
 
 const employeeAuthValidators = [

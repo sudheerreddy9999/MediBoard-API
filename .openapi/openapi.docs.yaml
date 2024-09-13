@@ -1,14 +1,19 @@
 openapi: "3.0.0"
-info: 
+info:
   title: hospital-management
   description: book-your-appointment
   version: 1.0.0
 servers:
   - url: /
+tags:
+  - name: Employee
+  - name: Doctor
 paths:
-  /auth:
+  /employee/auth:
     get:
-      description: To-verify-User-Login
+      tags:
+        - Employee
+      description: To-verify-Employe-Login
       parameters:
         - name: email
           in: header
@@ -21,5 +26,152 @@ paths:
           schema:
             type: string
       responses:
-        200: 
+        200:
           description: Login success
+  /employee:
+    post:
+      tags:
+        - Employee
+      description: To add an Employee
+      operationId: addEmployee
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: To add employee details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addEmployee"
+      responses:
+        200:
+          description: Employee added sucessfully
+    put:
+      tags:
+        - Employee
+      description: to update an employee
+      operationId: updateEmployee
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: to update an employee
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateEmployee"
+      responses:
+        200:
+          description: Employee updated sucessfully
+  /doctors/auth:
+    get:
+      tags:
+        - Doctor
+      description: To-verify-Doctor-Login
+      operationId: doctorAuth
+      parameters:
+        - name: email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Login success
+  /doctors:
+    post:
+      tags:
+        - Doctor
+      description: To add an Doctor
+      operationId: postDoctor
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: To add Doctor details
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addDoctor"
+      responses:
+        200:
+          description: Employee added sucessfully
+    put:
+      tags:
+        - Doctor
+      description: to update an Doctor
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: to update an Doctor
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateEmployee"
+      responses:
+        200:
+          description: Employee updated sucessfully
+
+components:
+  schemas:
+    addEmployee:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        mobile_number:
+          type: integer
+        gender:
+          type: string
+        password:
+          type: string
+        dob:
+          type: string
+        role:
+          type: string
+    updateEmployee:
+      type: object
+      properties:
+        employee_id: 
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        mobile_number:
+          type: integer
+        gender:
+          type: string
+        dob:
+          type: string
+        role:
+          type: string
+    addDoctor:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        mobile_number:
+          type: integer
+        password:
+          type: string
+        dob:
+          type: string
+        specialization:
+          type: string
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

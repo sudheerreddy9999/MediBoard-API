@@ -18,7 +18,8 @@ const VerifyToken = (request, response, next) => {
       return response.status(401).json({ message: 'Not Authorized' });
     }
     const decodedToken = jwt.verify(token, AppConfig.JWTSECRETKEY);
-    request.employee_id = decodedToken.employee_id;
+    console.log(decodedToken);
+    request.employee_id = decodedToken.employeeId;
     request.role = decodedToken.role.trim();
     const userId = decodedToken.userId;
     request.userId = userId;
