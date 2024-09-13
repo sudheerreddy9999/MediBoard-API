@@ -7,6 +7,7 @@ import JWT from '../middlewares/jwt.middleware.js';
 import validators from '../middlewares/validators/auth.validation.js';
 import employeeValidations from '../middlewares/validators/employee.validation.js';
 import AppointmentsController from '../controllers/appointments.controller.js';
+import DoctorsControllers from '../controllers/doctors.controllers.js';
 
 const app = express();
 const Router = express.Router();
@@ -15,6 +16,7 @@ Router.get('/auth', validators.loginValidation, AuthController.GetAuthController
 Router.post('/add', AuthController.AddNewUser);
 Router.post('/appointments/add',AppointmentsController.AddAppointMentController);
 Router.get('/employee/auth', employeeValidations.employeeAuthValidators, EmployeeController.GetEmployeeAuthController);
+Router.get('/doctors/get',DoctorsControllers.GetDoctorsControllers);
 Router.use(JWT.VerifyToken);
 Router.post('/employee/add',employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 export default Router;
