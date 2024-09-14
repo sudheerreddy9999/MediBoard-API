@@ -1,5 +1,8 @@
 import SlotsDTO from '../dto/slots.dto.js';
+import customUtility from '../utility/custom.utility.js';
 import logger from '../utility/logger.utility.js';
+
+const { customExceptionMessage } = customUtility;
 
 const GetAvilableSlotsByDoctorIdService = async (request) => {
   try {
@@ -12,6 +15,30 @@ const GetAvilableSlotsByDoctorIdService = async (request) => {
   }
 };
 
-const SlotsService = { GetAvilableSlotsByDoctorIdService };
+const CreateSlotsService = async (request) => {
+  try {
+    const created_by = request.employee_id;
+    const { doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
+
+    const slotData = await SlotsDTO.CheckSlotConflictDTO(doctor_id, slot_date, slot_time, slot_end_time);
+    if (slotData.length > 0) {
+      return customExceptionMessage(409, 'slot already booked');
+    }
+    const data = await SlotsDTO.CreateSlotsDTO(
+      doctor_id,
+      available_slots,
+      slot_date,
+      slot_time,
+      slot_end_time,
+      created_by,
+    );
+    return data;
+  } catch (error) {
+    logger.error({ CreateSlotsService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const SlotsService = { GetAvilableSlotsByDoctorIdService, CreateSlotsService };
 
 export default SlotsService;

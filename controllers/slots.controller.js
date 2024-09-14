@@ -13,6 +13,20 @@ const GetAvilableSlotsByDoctorIdController = async (request, response) => {
   }
 };
 
-const SlotsController = { GetAvilableSlotsByDoctorIdController };
+const CreateSlotsController = async (request, response) => {
+  try {
+    const data = await SlotsService.CreateSlotsService(request);
+    if (data.errorCode) {
+      return response.status(data.errorCode).json({ message: data.errorMessage });
+    } else {
+      return response.status(200).json({ message: 'Okay request sucessfull', slots: data });
+    }
+  } catch (error) {
+    logger.error({ CreateSlotsController: error.message });
+    return response.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const SlotsController = { GetAvilableSlotsByDoctorIdController, CreateSlotsController };
 
 export default SlotsController;

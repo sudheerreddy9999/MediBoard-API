@@ -8,6 +8,7 @@ servers:
 tags:
   - name: Employee
   - name: Doctor
+  - name: Slots
 paths:
   /employee/auth:
     get:
@@ -137,6 +138,21 @@ paths:
       responses:
         200:
           description: request successfull
+    post:
+      tags:
+        - Slots
+      description: To add slots
+      operationId: addSlot
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addSlot"
+      responses:
+        200:
+          description: Slot added sucessfully
 components:
   schemas:
     addEmployee:
@@ -192,7 +208,19 @@ components:
           type: string
         specialization:
           type: string
-
+    addSlot:
+      type: object
+      properties:
+        doctor_id:
+          type: integer
+        available_slots:
+          type: integer
+        slot_date:
+          type: string
+        slot_time:
+          type: string
+        slot_end_time:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http

@@ -10,6 +10,7 @@ import AppointmentsController from '../controllers/appointments.controller.js';
 import DoctorsControllers from '../controllers/doctors.controllers.js';
 import DoctorValidations from '../middlewares/validators/doctor.validation.js';
 import SlotsController from '../controllers/slots.controller.js';
+import SlotsValidations from '../middlewares/validators/slots.validation.js';
 
 const Router = express.Router();
 
@@ -23,4 +24,5 @@ Router.get('/slots', SlotsController.GetAvilableSlotsByDoctorIdController);
 Router.use(JWT.VerifyToken);
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
+Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.CreateSlotsController);
 export default Router;
