@@ -8,6 +8,7 @@ const QUERY = { GET_USER_BY_EMAIL: properties.get('query.get_userbyemail'),
     ADD_NEW_USER: properties.get('query.post_newuser'),
     GET_DOCTORS: properties.get('query.get_doctors'),
     POST_DOCTOR: properties.get('query.post_doctor'),
+    GET_ALLDOCTORS: properties.get('query.get_all_doctors'),
  };
 
 const DB = { QUERY };

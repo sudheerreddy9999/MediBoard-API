@@ -17,6 +17,16 @@ const GetDoctorAuthControllers = async (request, response) => {
   }
 };
 
+const GetAllDoctorsController = async (request, response) => {
+  try {
+    const doctorsData = await DoctorsService.GetAllDoctorsService(request);
+    return response.status(200).json({message: 'Okay request successfull', doctorData: doctorsData})
+  } catch (error) {
+    logger.error({ GetDoctorAuthControllers: error.message });
+    return response.status(500).json({ message: 'Internal server Error' });
+  }
+};
+
 const PostDoctorController = async (request, response) => {
   try {
     const data = await DoctorsService.PostDoctorService(request);
@@ -31,6 +41,6 @@ const PostDoctorController = async (request, response) => {
   }
 };
 
-const DoctorsControllers = { GetDoctorAuthControllers, PostDoctorController };
+const DoctorsControllers = { GetDoctorAuthControllers, PostDoctorController, GetAllDoctorsController };
 
 export default DoctorsControllers;

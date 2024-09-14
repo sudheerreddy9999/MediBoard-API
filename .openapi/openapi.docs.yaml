@@ -81,6 +81,15 @@ paths:
       responses:
         200:
           description: Login success
+  /doctors/all: 
+    get: 
+      tags:
+        - Doctor
+      description: To get all doctors
+      operationId: getDoctors
+      responses:
+        200:
+          description: request successfull
   /doctors:
     post:
       tags:

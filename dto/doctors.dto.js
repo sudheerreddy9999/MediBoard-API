@@ -18,6 +18,17 @@ const GETDOCTORS = async (email, mobile_number) => {
   }
 };
 
+const GetAllDoctorsDTO = async () => {
+  try {
+    const query = DB.QUERY.GET_ALLDOCTORS;
+    const data = await pgsql.query(query, { type: pgsql.QueryTypes.SELECT });
+    return data;
+  } catch (error) {
+    logger.error({ GetAllDoctorsDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
 const AddDoctorDTO = async (name, dob, email, specialization, mobile_number, password, created_by) => {
   try {
     const query = DB.QUERY.POST_DOCTOR;
@@ -29,6 +40,6 @@ const AddDoctorDTO = async (name, dob, email, specialization, mobile_number, pas
     throw new Error(error.message);
   }
 };
-const DoctorsDto = { GETDOCTORS, AddDoctorDTO };
+const DoctorsDto = { GETDOCTORS, AddDoctorDTO, GetAllDoctorsDTO };
 
 export default DoctorsDto;

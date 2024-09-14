@@ -17,6 +17,7 @@ Router.post('/add', AuthController.AddNewUser);
 Router.post('/appointments/add', AppointmentsController.AddAppointMentController);
 Router.get('/employee/auth', employeeValidations.employeeAuthValidators, EmployeeController.GetEmployeeAuthController);
 Router.get('/doctors/auth', DoctorValidations.DoctorAuth, DoctorsControllers.GetDoctorAuthControllers);
+Router.get('/doctors/all', DoctorsControllers.GetAllDoctorsController);
 Router.use(JWT.VerifyToken);
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);

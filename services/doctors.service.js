@@ -36,6 +36,16 @@ const GetDoctorsService = async (request) => {
   }
 };
 
+const GetAllDoctorsService = async () => {
+  try {
+    const data = await DoctorsDto.GetAllDoctorsDTO();
+    return data;
+  } catch (error) {
+    logger.error({ GetAllDoctorsService: error.message });
+    throw new Error(error.message);
+  }
+};
+
 const PostDoctorService = async (request) => {
   try {
     const created_by = request.employee_id;
@@ -53,7 +63,7 @@ const PostDoctorService = async (request) => {
       return customExceptionMessage(409, 'Doctor already exists with mobile number');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(created_by)
+    console.log(created_by);
     const result = await DoctorsDto.AddDoctorDTO(
       name,
       dob,
@@ -71,6 +81,6 @@ const PostDoctorService = async (request) => {
   }
 };
 
-const DoctorsService = { GetDoctorsService, PostDoctorService };
+const DoctorsService = { GetDoctorsService, PostDoctorService,GetAllDoctorsService };
 
 export default DoctorsService;
