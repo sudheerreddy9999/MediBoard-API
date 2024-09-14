@@ -81,8 +81,8 @@ paths:
       responses:
         200:
           description: Login success
-  /doctors/all: 
-    get: 
+  /doctors/all:
+    get:
       tags:
         - Doctor
       description: To get all doctors
@@ -122,7 +122,21 @@ paths:
       responses:
         200:
           description: Employee updated sucessfully
-
+  /slots:
+    get:
+      tags:
+        - Slots
+      description: To get all slots
+      operationId: getSlots
+      parameters:
+        - name: doctor_id
+          in: header
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: request successfull
 components:
   schemas:
     addEmployee:
@@ -147,7 +161,7 @@ components:
     updateEmployee:
       type: object
       properties:
-        employee_id: 
+        employee_id:
           type: integer
         first_name:
           type: string

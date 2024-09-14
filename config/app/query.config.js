@@ -9,6 +9,7 @@ const QUERY = { GET_USER_BY_EMAIL: properties.get('query.get_userbyemail'),
     GET_DOCTORS: properties.get('query.get_doctors'),
     POST_DOCTOR: properties.get('query.post_doctor'),
     GET_ALLDOCTORS: properties.get('query.get_all_doctors'),
+    GET_AVILABLE_SLOTS_BY_DOCTOR_ID: properties.get('query.get_avilable_slots_by_doctor_id'),
  };
 
 const DB = { QUERY };
