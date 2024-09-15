@@ -13,6 +13,12 @@ const QUERY = {
   GET_AVILABLE_SLOTS_BY_DOCTOR_ID: properties.get('query.get_avilable_slots_by_doctor_id'),
   CHECK_SLOT_CONFLICT: properties.get('query.check_slot_conflict'),
   POST_SLOT: properties.get('query.post_slot'),
+  GET_SLOTS_BY_ID: properties.get('query.get_slots_by_id'),
+  GET_DOCTOR_BY_ID: properties.get('query.get_doctor_by_id'),
+  UPDATE_BOOKED_SLOTS: properties.get('query.update_booked_slots'),
+  DELETE_APPOINTEMENT: properties.get('query.delete_appointement'),
+  GET_APPOINTMENTS_BY_DATE: properties.get('query.get_appointments_by_date'),
+  GET_APPOINTMENTS_FOR_USER__CURRENTDATE: properties.get('query.get_appointments_for_user__currentdate'),
 };
 
 const DB = { QUERY };

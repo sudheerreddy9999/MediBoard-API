@@ -27,6 +27,18 @@ const CheckSlotConflictDTO = async (doctor_id, slot_date, slot_time, slot_end_ti
   }
 };
 
+const GetSlotBySlotIdDTO = async (slot_id) => {
+  try {
+    const query = DB.QUERY.GET_SLOTS_BY_ID;
+    const replacements = { slot_id };
+    const data = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.SELECT });
+    return data;
+  } catch (error) {
+    logger.error({ GetSlotBySlotIdDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
 const CreateSlotsDTO = async (doctor_id, available_slots, slot_date, slot_time, slot_end_time, created_by) => {
   try {
     const query = DB.QUERY.POST_SLOT;
@@ -39,6 +51,24 @@ const CreateSlotsDTO = async (doctor_id, available_slots, slot_date, slot_time, 
   }
 };
 
-const SlotsDTO = { GetAvilableSlotsByDoctorIdDTO, CheckSlotConflictDTO, CreateSlotsDTO };
+const UpdateBookedSlotsDTO = async (slot_id, booked_slots) => {
+  try {
+    const query = DB.QUERY.UPDATE_BOOKED_SLOTS;
+    const replacements = { slot_id, booked_slots };
+    const data = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.UPDATE });
+    return data;
+  } catch (error) {
+    logger.error({ UpdateBookedSlotsDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const SlotsDTO = {
+  GetAvilableSlotsByDoctorIdDTO,
+  CheckSlotConflictDTO,
+  CreateSlotsDTO,
+  GetSlotBySlotIdDTO,
+  UpdateBookedSlotsDTO,
+};
 
 export default SlotsDTO;

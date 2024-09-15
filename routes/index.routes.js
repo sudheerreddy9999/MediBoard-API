@@ -11,12 +11,13 @@ import DoctorsControllers from '../controllers/doctors.controllers.js';
 import DoctorValidations from '../middlewares/validators/doctor.validation.js';
 import SlotsController from '../controllers/slots.controller.js';
 import SlotsValidations from '../middlewares/validators/slots.validation.js';
+import AppointementValidations from '../middlewares/validators/appointment.validation.js';
 
 const Router = express.Router();
 
 Router.get('/auth', validators.loginValidation, AuthController.GetAuthController);
 Router.post('/add', AuthController.AddNewUser);
-Router.post('/appointments/add', AppointmentsController.AddAppointMentController);
+Router.post('/appointments/guest', AppointementValidations.validateAppointmentCreation, AppointmentsController.AddAppointmentController);
 Router.get('/employee/auth', employeeValidations.employeeAuthValidators, EmployeeController.GetEmployeeAuthController);
 Router.get('/doctors/auth', DoctorValidations.DoctorAuth, DoctorsControllers.GetDoctorAuthControllers);
 Router.get('/doctors/all', DoctorsControllers.GetAllDoctorsController);
@@ -25,4 +26,6 @@ Router.use(JWT.VerifyToken);
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
 Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.CreateSlotsController);
+Router.post('/appointments', AppointementValidations.validateAppointmentCreation, AppointmentsController.AddAppointmentController);
+Router.get('/appointments', AppointementValidations.CheckAppointmentDate, AppointmentsController.GetAppointmentsByDateController);
 export default Router;

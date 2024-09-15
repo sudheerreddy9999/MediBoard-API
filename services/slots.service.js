@@ -1,3 +1,4 @@
+import DoctorsDto from '../dto/doctors.dto.js';
 import SlotsDTO from '../dto/slots.dto.js';
 import customUtility from '../utility/custom.utility.js';
 import logger from '../utility/logger.utility.js';
@@ -7,6 +8,11 @@ const { customExceptionMessage } = customUtility;
 const GetAvilableSlotsByDoctorIdService = async (request) => {
   try {
     const { doctor_id } = request.headers;
+
+    const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
+    if (doctorData.length === 0) {
+      return customExceptionMessage(404, 'Doctor not found with given id');
+    }
     const data = await SlotsDTO.GetAvilableSlotsByDoctorIdDTO(doctor_id);
     return data;
   } catch (error) {
@@ -20,6 +26,10 @@ const CreateSlotsService = async (request) => {
     const created_by = request.employee_id;
     const { doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
 
+    const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
+    if (doctorData.length === 0) {
+      return customExceptionMessage(404, 'Doctor not found with given id');
+    }
     const slotData = await SlotsDTO.CheckSlotConflictDTO(doctor_id, slot_date, slot_time, slot_end_time);
     if (slotData.length > 0) {
       return customExceptionMessage(409, 'slot already booked');

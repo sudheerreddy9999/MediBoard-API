@@ -29,6 +29,18 @@ const GetAllDoctorsDTO = async () => {
   }
 };
 
+const GetDoctroByIdDTO = async (doctor_id) => {
+  try {
+    const query = DB.QUERY.GET_DOCTOR_BY_ID
+    const replacements = {doctor_id};
+    const data = await pgsql.query(query, {replacements, type: pgsql.QueryTypes.SELECT});
+    return data;
+  } catch (error) {
+    logger.error({GetDoctroByIdDTO: error.message});
+    throw new Error(error.message);
+  }
+}
+
 const AddDoctorDTO = async (name, dob, email, specialization, mobile_number, password, created_by) => {
   try {
     const query = DB.QUERY.POST_DOCTOR;
@@ -40,6 +52,6 @@ const AddDoctorDTO = async (name, dob, email, specialization, mobile_number, pas
     throw new Error(error.message);
   }
 };
-const DoctorsDto = { GETDOCTORS, AddDoctorDTO, GetAllDoctorsDTO };
+const DoctorsDto = { GETDOCTORS, AddDoctorDTO, GetAllDoctorsDTO, GetDoctroByIdDTO };
 
 export default DoctorsDto;

@@ -153,6 +153,55 @@ paths:
       responses:
         200:
           description: Slot added sucessfully
+  /appointments/guest:
+    post:
+      tags:
+        - Appointments
+      description: To add appointments
+      operationId: addAppointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postGuestAppoitment"
+      responses:
+        200:
+          description: Appointment booked sucessfully
+  /appointments:
+    get:
+      tags:
+        - Appointments
+      description: Get appointements by slot_date
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: created_date
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: appointements
+
+    post:
+      tags:
+        - Appointments
+      description: To add appointments
+      operationId: addAppointment
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postAppoitment"
+      responses:
+        200:
+          description: Appointment booked sucessfully
+
 components:
   schemas:
     addEmployee:
@@ -220,6 +269,32 @@ components:
         slot_time:
           type: string
         slot_end_time:
+          type: string
+    postGuestAppoitment:
+      type: object
+      properties:
+        name:
+          type: string
+        mobile_number:
+          type: integer
+        email:
+          type: string
+        slot_id:
+          type: integer
+    postAppoitment:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        name:
+          type: string
+        mobile_number:
+          type: integer
+        email:
+          type: string
+        slot_id:
+          type: integer
+        is_emergency:
           type: string
   securitySchemes:
     BearerAuth:

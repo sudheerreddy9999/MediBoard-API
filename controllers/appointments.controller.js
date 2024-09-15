@@ -1,21 +1,31 @@
-'use strict'
+'use strict';
 
-import AppointmentsService from "../services/appointments.service.js"
+import AppointmentsService from '../services/appointments.service.js';
+import logger from '../utility/logger.utility.js';
 
-const AddAppointMentController = async(request,response)=>{
-    console.log(request,"Request VAlue is")
-    try {
-        const data = AppointmentsService.PostAppointmentServive(request);
-        if(!data){
-            return response.status(401).json({message:"Failed to add appointment"})
-        }else{
-            return response.status(200).json({message:"Success appointment Added sucessfully"})
-        }
-    } catch (error) {
-        console.error(error.message);
-        return response.status(500).json({message:"Internal Server Error"})
+const AddAppointmentController = async (request, response) => {
+  try {
+    const data = await AppointmentsService.PostAppointmentServive(request);
+    if (data.errorCode) {
+      return response.status(data.errorCode).json({ message: data.errorMessage });
+    } else {
+      return response.status(200).json({ message: 'Appointement booked sucessfully' });
     }
-}
+  } catch (error) {
+    console.error(error.message);
+    return response.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
-const AppointmentsController = {AddAppointMentController};
-export default AppointmentsController
+const GetAppointmentsByDateController = async (request, response) => {
+  try {
+    const data = await AppointmentsService.GetAppointmentsByDateService(request);
+    return response.status(200).json({ message: 'Okay request sucessfull', appointments: data });
+  } catch (error) {
+    logger.error(error.message);
+    return response.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+const AppointmentsController = { AddAppointmentController, GetAppointmentsByDateController };
+export default AppointmentsController;
