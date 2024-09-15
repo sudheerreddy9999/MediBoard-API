@@ -25,7 +25,7 @@ const GetAllSlotsByDoctorIdService = async (request) => {
   try {
     const { doctor_id } = request.headers;
 
-    const doctorData = await SlotsDTO.GetAllSlotsByDoctorIdDTO(doctor_id);
+    const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
     if (doctorData.length === 0) {
       return customExceptionMessage(404, 'Doctor not found with given id');
     }
