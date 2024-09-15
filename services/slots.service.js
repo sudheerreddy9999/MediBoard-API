@@ -3,7 +3,7 @@ import SlotsDTO from '../dto/slots.dto.js';
 import customUtility from '../utility/custom.utility.js';
 import logger from '../utility/logger.utility.js';
 
-const { customExceptionMessage } = customUtility;
+const { customExceptionMessage, formatDateTime } = customUtility;
 
 const GetAvilableSlotsByDoctorIdService = async (request) => {
   try {
@@ -30,7 +30,17 @@ const GetAllSlotsByDoctorIdService = async (request) => {
       return customExceptionMessage(404, 'Doctor not found with given id');
     }
     const data = await SlotsDTO.GetAllSlotsByDoctorIdDTO(doctor_id);
-    return data;
+    const formatedData = data.map((d) => {
+      const startDate = formatDateTime(d.slot_date, d.slot_time)
+      const endDate = formatDateTime(d.slot_date, d.slot_end_time)
+      return {
+        title: d.title,
+        description: d.description,
+        start: startDate,
+        end: endDate,
+      };
+    });
+    return formatedData;
   } catch (error) {
     logger.error({ GetAllSlotsByDoctorIdService: error.message });
     throw new Error(error.message);
@@ -40,7 +50,7 @@ const GetAllSlotsByDoctorIdService = async (request) => {
 const CreateSlotsService = async (request) => {
   try {
     const created_by = request.employee_id;
-    const {description, title, doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
+    const { description, title, doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
 
     const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
     if (doctorData.length === 0) {
@@ -51,7 +61,8 @@ const CreateSlotsService = async (request) => {
       return customExceptionMessage(409, 'slot already booked');
     }
     const data = await SlotsDTO.CreateSlotsDTO(
-      description, title,
+      description,
+      title,
       doctor_id,
       available_slots,
       slot_date,
