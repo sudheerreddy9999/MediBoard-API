@@ -51,16 +51,34 @@ Router.get('/slots/doctor', AppointementValidations.CheckDoctorId, SlotsControll
 
 Router.put('/slots', SlotsValidations.validateSlotUpdation, SlotsController.UpdateSlotsController);
 
+Router.get(
+  '/appointments',
+  AppointementValidations.CheckAppointmentDate,
+  AppointmentsController.GetAppointmentsByDateController,
+);
+
+Router.get(
+  '/appointments/id',
+  AppointementValidations.CheckAppointmentId,
+  AppointmentsController.GetAppointmentByIdController,
+);
+
 Router.post(
   '/appointments',
   AppointementValidations.validateAppointmentCreation,
   AppointmentsController.AddAppointmentController,
 );
 
-Router.get(
-  '/appointments',
-  AppointementValidations.CheckAppointmentDate,
-  AppointmentsController.GetAppointmentsByDateController,
+Router.patch(
+  '/appointments/complete',
+  AppointementValidations.CheckAppointmentId,
+  AppointmentsController.UpdateAppointmentCompletedStatusController,
+);
+
+Router.patch(
+  '/appointments/cancel',
+  AppointementValidations.CheckAppointmentId,
+  AppointmentsController.UpdateAppointmentCancelStatusController,
 );
 
 export default Router;

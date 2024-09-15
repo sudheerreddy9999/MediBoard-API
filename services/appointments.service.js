@@ -76,6 +76,82 @@ const GetCurrentAppointmentQueueService = async (request) => {
   }
 };
 
-const AppointmentsService = { PostAppointmentServive, GetAppointmentsByDateService, GetCurrentAppointmentQueueService };
+const GetAppointmentByIdService = async (request) => {
+  try {
+    const { appointment_id } = request.headers;
+    const data = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id);
+    return data;
+  } catch (error) {
+    logger.error({ GetAppointmentByIdService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const UpdateAppointmentCompletedStatusService = async (request) => {
+  try {
+    const { appointment_id } = request.headers;
+    const role = request.role;
+    if (!role) {
+      return customExceptionMessage(401, 'you are not authorized to ');
+    }
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
+    if(appointment.length === 0){
+      return customExceptionMessage(404, 'appointment not found')
+    }
+    const data = await AppointmentsDto.UpdateAppointmentStatusDTO(appointment_id, 'completed');
+    return data;
+  } catch (error) {
+    logger.error({ UpdateAppointmentCompletedStatusService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const UpdateAppointmentCancelStatusService = async (request) => {
+  try {
+    const { appointment_id } = request.headers;
+    const role = request.role;
+    if (!role) {
+      return customExceptionMessage(401, 'you are not authorized to ');
+    }
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
+    if(appointment.length === 0){
+      return customExceptionMessage(404, 'appointment not found')
+    }
+    const data = await AppointmentsDto.UpdateAppointmentStatusDTO(appointment_id, 'cancel');
+    return data;
+  } catch (error) {
+    logger.error({ UpdateAppointmentCancelStatusService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const UpdateAppointmentTestStatusService = async (request) => {
+  try {
+    const { appointment_id } = request.headers;
+    const role = request.role;
+    if (!role) {
+      return customExceptionMessage(401, 'you are not authorized to ');
+    }
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
+    if(appointment.length === 0){
+      return customExceptionMessage(404, 'appointment not found')
+    }
+    const data = await AppointmentsDto.UpdateAppointmentTestStatusDTO(appointment_id);
+    return data;
+  } catch (error) {
+    logger.error({ UpdateAppointmentTestStatusService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const AppointmentsService = {
+  PostAppointmentServive,
+  GetAppointmentsByDateService,
+  GetCurrentAppointmentQueueService,
+  UpdateAppointmentCompletedStatusService,
+  UpdateAppointmentCancelStatusService,
+  UpdateAppointmentTestStatusService,
+  GetAppointmentByIdService,
+};
 
 export default AppointmentsService;

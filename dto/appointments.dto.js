@@ -79,12 +79,53 @@ const GetCurrentAppointmentQueueDTO = async (doctor_id) => {
   }
 };
 
+const GetAppointmentByIdDTO = async (appointment_id) => {
+  try {
+    const query = DB.QUERY.GET_APPOINTEMENT_BY_ID;
+    const replacements = { appointment_id };
+
+    const data = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.SELECT });
+    return data;
+  } catch (error) {
+    logger.error({ GetAppointmentByIdDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const UpdateAppointmentStatusDTO = async (appointment_id,status) => {
+  try {
+    const query = DB.QUERY.UPDATE_APPOINTMENT_STATUS;
+    const replacements = {appointment_id,status}
+    console.log(replacements)
+    const result = await pgsql.query(query, {replacements, type: pgsql.QueryTypes.UPDATE})
+    return result
+  } catch (error) {
+    logger.error({ UpdateAppointmentStatusDTO: error.message });
+    throw new Error(error.message);
+  }
+}
+
+const UpdateAppointmentTestStatusDTO = async (appointment_id) => {
+  try {
+    const query = DB.QUERY.UPDATE_APPOINTMENT_TEST_STATUS;
+    const replacements = {appointment_id}
+    const result = await pgsql.query(query, {replacements, type: pgsql.QueryTypes.UPDATE})
+    return result
+  } catch (error) {
+    logger.error({ UpdateAppointmentTestStatusDTO: error.message });
+    throw new Error(error.message);
+  }
+}
+
 const AppointmentsDto = {
   PostNewAppointment,
   DeleteAppointementDTO,
   GetCurrentAppointmentsForUserDTO,
   GetAppointmentsByDateDTO,
   GetCurrentAppointmentQueueDTO,
+  UpdateAppointmentStatusDTO,
+  UpdateAppointmentTestStatusDTO,
+  GetAppointmentByIdDTO,
 };
 
 export default AppointmentsDto;

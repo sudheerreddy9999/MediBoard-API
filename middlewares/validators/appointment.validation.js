@@ -70,10 +70,22 @@ const CheckAppointmentDate = [
   },
 ];
 
+const CheckAppointmentId = [
+  header('appointment_id').isInt().withMessage('Enter valid appointment id'),
+  (request, response, next) => {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ message: errors.array() });
+    }
+    next();
+  },
+]
+
 const AppointementValidations = {
   validateAppointmentCreation,
   CheckAppointmentDate,
   CheckDoctorId,
+  CheckAppointmentId,
 };
 
 export default AppointementValidations;

@@ -23,6 +23,9 @@ const QUERY = {
   GET_SLOTS_BY_DOCTOR_ID: properties.get('query.get_slots_by_doctor_id'),
   CHECK_SLOT_CONFLICT_EXCEPT_SLOT_ID: properties.get('query.check_slot_conflict_except_slot_id'),
   UPDATE_SLOT: properties.get('query.update_slot'),
+  UPDATE_APPOINTMENT_STATUS: properties.get('query.update_appointment_status'),
+  UPDATE_APPOINTMENT_TEST_STATUS: properties.get('query.update_appointment_test_status'),
+  GET_APPOINTEMENT_BY_ID: properties.get('query.get_appointement_by_id')
 };
 
 const DB = { QUERY };

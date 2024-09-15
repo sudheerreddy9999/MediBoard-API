@@ -248,7 +248,57 @@ paths:
       responses:
         200:
           description: Appointment booked sucessfully
-
+  /appointments/id:
+    get:
+      tags:
+        - Appointments
+      description: Get appointements by id
+      operationId: getAppointmentById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: appointment_id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: appointements
+  /appointments/complete:
+    patch:
+      tags:
+        - Appointments
+      description: update the complete status by id
+      operationId: updateCompleteAppointmentById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: appointment_id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: appointements
+  /appointments/cancel:
+    patch:
+      tags:
+        - Appointments
+      description: update the cancel status by id
+      operationId: updateCancelAppointmentById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: appointment_id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: appointements
 components:
   schemas:
     addEmployee:
