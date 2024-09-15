@@ -16,16 +16,23 @@ import AppointementValidations from '../middlewares/validators/appointment.valid
 const Router = express.Router();
 
 Router.get('/auth', validators.loginValidation, AuthController.GetAuthController);
+
 Router.post('/add', AuthController.AddNewUser);
+
 Router.post(
   '/appointments/guest',
   AppointementValidations.validateAppointmentCreation,
   AppointmentsController.AddAppointmentController,
 );
+
 Router.get('/employee/auth', employeeValidations.employeeAuthValidators, EmployeeController.GetEmployeeAuthController);
+
 Router.get('/doctors/auth', DoctorValidations.DoctorAuth, DoctorsControllers.GetDoctorAuthControllers);
+
 Router.get('/doctors/all', DoctorsControllers.GetAllDoctorsController);
+
 Router.get('/slots', AppointementValidations.CheckDoctorId, SlotsController.GetAvilableSlotsByDoctorIdController);
+
 Router.get(
   '/appointments/current-queue',
   AppointementValidations.CheckDoctorId,
@@ -35,21 +42,25 @@ Router.get(
 Router.use(JWT.VerifyToken);
 
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
+
 Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
+
 Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.CreateSlotsController);
-Router.get(
-  '/slots/doctor',
-  AppointementValidations.CheckDoctorId,
-  SlotsController.GetAllSlotsByDoctorIdController,
-);
+
+Router.get('/slots/doctor', AppointementValidations.CheckDoctorId, SlotsController.GetAllSlotsByDoctorIdController);
+
+Router.put('/slots', SlotsValidations.validateSlotUpdation, SlotsController.UpdateSlotsController);
+
 Router.post(
   '/appointments',
   AppointementValidations.validateAppointmentCreation,
   AppointmentsController.AddAppointmentController,
 );
+
 Router.get(
   '/appointments',
   AppointementValidations.CheckAppointmentDate,
   AppointmentsController.GetAppointmentsByDateController,
 );
+
 export default Router;

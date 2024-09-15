@@ -20,7 +20,9 @@ const QUERY = {
   GET_APPOINTMENTS_BY_DATE: properties.get('query.get_appointments_by_date'),
   GET_APPOINTMENTS_FOR_USER__CURRENTDATE: properties.get('query.get_appointments_for_user__currentdate'),
   GET_CURRENT_APPOINTMENT_QUEUE: properties.get('query.get_current_appointment_queue'),
-  GET_SLOTS_BY_DOCTOR_ID:properties.get('query.get_slots_by_doctor_id')
+  GET_SLOTS_BY_DOCTOR_ID: properties.get('query.get_slots_by_doctor_id'),
+  CHECK_SLOT_CONFLICT_EXCEPT_SLOT_ID: properties.get('query.check_slot_conflict_except_slot_id'),
+  UPDATE_SLOT: properties.get('query.update_slot'),
 };
 
 const DB = { QUERY };

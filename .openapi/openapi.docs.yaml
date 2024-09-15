@@ -153,6 +153,21 @@ paths:
       responses:
         200:
           description: Slot added sucessfully
+    put:
+      tags:
+        - Slots
+      description: To update slots
+      operationId: updateSlot
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateSlot"
+      responses:
+        200:
+          description: Slot updated sucessfully
   /slots/doctor:
     get:
       tags:
@@ -292,11 +307,28 @@ components:
     addSlot:
       type: object
       properties:
-        description: 
+        description:
           type: string
-        title: 
+        title:
           type: string
         doctor_id:
+          type: integer
+        available_slots:
+          type: integer
+        slot_date:
+          type: string
+        slot_time:
+          type: string
+        slot_end_time:
+          type: string
+    updateSlot:
+      type: object
+      properties:
+        description:
+          type: string
+        title:
+          type: string
+        slot_id:
           type: integer
         available_slots:
           type: integer
