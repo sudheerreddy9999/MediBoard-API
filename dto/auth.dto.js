@@ -2,6 +2,7 @@
 
 import DB from '../config/app/query.config.js';
 import pgsql from '../config/database/database.config.js';
+import logger from '../utility/logger.utility.js';
 
 const GetUserByEmailDTO = async (email) => {
   try {
@@ -10,10 +11,9 @@ const GetUserByEmailDTO = async (email) => {
       email: email,
     };
     const data = await pgsql.query(query, { type: pgsql.QueryTypes.SELECT, replacements: replacements });
-    console.log(data,"Inside Email Verification")
     return data;
   } catch (error) {
-    console.error(error.message);
+    logger.error({GetUserByEmailDTO: error.message});
     throw new Error(error.message);
   }
 };
@@ -31,7 +31,7 @@ const AddNewUser = async (first_name, last_name, email, password, mobile_number)
     const data = await pgsql.query(query, { type: pgsql.QueryTypes.INSERT, replacements: replacements });
     return data;
   } catch (error) {
-    console.error(error.message);
+    logger.error({AddNewUser: error.message});
     throw new Error(error.message);
   }
 };

@@ -63,7 +63,6 @@ const PostDoctorService = async (request) => {
       return customExceptionMessage(409, 'Doctor already exists with mobile number');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(created_by);
     const result = await DoctorsDto.AddDoctorDTO(
       name,
       dob,
@@ -75,7 +74,6 @@ const PostDoctorService = async (request) => {
     );
     return result;
   } catch (error) {
-    console.log(error);
     logger.error({ PostDoctorService: error.message });
     throw new Error(error.message);
   }

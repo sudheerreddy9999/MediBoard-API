@@ -153,12 +153,27 @@ paths:
       responses:
         200:
           description: Slot added sucessfully
+  /appointments/current-queue:
+    get:
+      tags:
+        - Appointments
+      description: To get appointments current queue
+      operationId: getAppointmentQueue
+      parameters:
+        - name: doctor_id 
+          in: header
+          required: true
+          schema: 
+            type: integer
+      responses:
+        200:
+          description: Appointment booked sucessfully
   /appointments/guest:
     post:
       tags:
         - Appointments
       description: To add appointments
-      operationId: addAppointment
+      operationId: addGuestAppointment
       requestBody:
         required: true
         content:

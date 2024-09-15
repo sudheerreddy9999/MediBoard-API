@@ -19,6 +19,7 @@ const QUERY = {
   DELETE_APPOINTEMENT: properties.get('query.delete_appointement'),
   GET_APPOINTMENTS_BY_DATE: properties.get('query.get_appointments_by_date'),
   GET_APPOINTMENTS_FOR_USER__CURRENTDATE: properties.get('query.get_appointments_for_user__currentdate'),
+  GET_CURRENT_APPOINTMENT_QUEUE: properties.get('query.get_current_appointment_queue'),
 };
 
 const DB = { QUERY };

@@ -30,7 +30,6 @@ const GetEmployeeAuthService = async (request) => {
     const employeeInfo = { userData, token };
     return employeeInfo;
   } catch (error) {
-    console.log(error)
     console.error(error.message);
     throw new Error(error.message);
   }

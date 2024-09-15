@@ -2,6 +2,7 @@
 
 import DB from '../config/app/query.config.js';
 import pgsql from '../config/database/database.config.js';
+import logger from '../utility/logger.utility.js';
 
 const AddNewEmployeeDTO = async (
   hashedPassword,
@@ -25,8 +26,7 @@ const AddNewEmployeeDTO = async (
     const data = await pgsql.query(query, { type: pgsql.QueryTypes.INSERT, replacements: replacements });
     return data;
   } catch (error) {
-    console.log(error)
-    console.error(error.messsage);
+    logger.error({AddNewEmployeeDTO: error.messsage});
     throw new Error(error.messsage);
   }
 };
@@ -38,10 +38,9 @@ const GetEmployeeDto = async (email, number) => {
       type: pgsql.QueryTypes.SELECT,
       replacements: { email: email ? email : null, mobile_number: number ? number : null },
     });
-    console.log(data);
     return data;
   } catch (error) {
-    console.error({ GetEmployeeDto: error.messsage });
+    logger.error({ GetEmployeeDto: error.messsage });
     throw new Error(error.messsage);
   }
 };

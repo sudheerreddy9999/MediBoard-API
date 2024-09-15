@@ -27,5 +27,15 @@ const GetAppointmentsByDateController = async (request, response) => {
   }
 };
 
-const AppointmentsController = { AddAppointmentController, GetAppointmentsByDateController };
+const GetCurrentAppointmentQueueController = async (request, response) => {
+  try {
+    const data = await AppointmentsService.GetCurrentAppointmentQueueService(request);
+    return response.status(200).json({ message: 'Okay request sucessfull', appointmentsCurrentQueue: data });
+  } catch (error) {
+    logger.error({ GetCurrentAppointmentQueueController: error.message });
+    return response.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+const AppointmentsController = { AddAppointmentController, GetAppointmentsByDateController, GetCurrentAppointmentQueueController };
 export default AppointmentsController;

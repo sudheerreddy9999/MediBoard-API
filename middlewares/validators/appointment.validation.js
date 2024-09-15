@@ -44,6 +44,21 @@ const validateAppointmentCreation = [
   },
 ];
 
+const CheckDoctorId = [
+  header('doctor_id')
+    .isInt()
+    .withMessage('Doctor ID must be an integer')
+    .notEmpty()
+    .withMessage('Doctor ID is required'),
+  (request, response, next) => {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ message: errors.array() });
+    }
+    next();
+  },
+];
+
 const CheckAppointmentDate = [
   header('created_date').isDate().withMessage('Date must be a valid date'),
   (request, response, next) => {
@@ -58,6 +73,7 @@ const CheckAppointmentDate = [
 const AppointementValidations = {
   validateAppointmentCreation,
   CheckAppointmentDate,
+  CheckDoctorId,
 };
 
 export default AppointementValidations;

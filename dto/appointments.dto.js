@@ -7,7 +7,7 @@ const PostNewAppointment = async (user_id, name, mobile_number, email, slot_id, 
   try {
     const query = DB.QUERY.POST_APPOINTMENT;
     const replacements = {
-      user_id: user_id ? user_id : null,
+      user_id: user_id ? user_id : 0,
       name: name,
       mobile_number: mobile_number,
       email: email,
@@ -37,7 +37,7 @@ const DeleteAppointementDTO = async (appointment_id) => {
   }
 };
 
-const GetCurreAppointmentsForUserDTO = async (mobile_number, email) => {
+const GetCurrentAppointmentsForUserDTO = async (mobile_number, email) => {
   try {
     const query = DB.QUERY.GET_APPOINTMENTS_FOR_USER__CURRENTDATE;
     const replacements = {
@@ -66,6 +66,25 @@ const GetAppointmentsByDateDTO = async (created_date) => {
   }
 };
 
-const AppointmentsDto = { PostNewAppointment, DeleteAppointementDTO, GetCurreAppointmentsForUserDTO, GetAppointmentsByDateDTO };
+const GetCurrentAppointmentQueueDTO = async (doctor_id) => {
+  try {
+    const query = DB.QUERY.GET_CURRENT_APPOINTMENT_QUEUE;
+    const replacements = { doctor_id };
+
+    const data = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.SELECT });
+    return data;
+  } catch (error) {
+    logger.error({ GetCurrentAppointmentQueueDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const AppointmentsDto = {
+  PostNewAppointment,
+  DeleteAppointementDTO,
+  GetCurrentAppointmentsForUserDTO,
+  GetAppointmentsByDateDTO,
+  GetCurrentAppointmentQueueDTO,
+};
 
 export default AppointmentsDto;

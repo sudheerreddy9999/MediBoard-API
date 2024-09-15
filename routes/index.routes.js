@@ -22,7 +22,10 @@ Router.get('/employee/auth', employeeValidations.employeeAuthValidators, Employe
 Router.get('/doctors/auth', DoctorValidations.DoctorAuth, DoctorsControllers.GetDoctorAuthControllers);
 Router.get('/doctors/all', DoctorsControllers.GetAllDoctorsController);
 Router.get('/slots', SlotsController.GetAvilableSlotsByDoctorIdController);
+Router.get('/appointments/current-queue', AppointementValidations.CheckDoctorId, AppointmentsController.GetCurrentAppointmentQueueController);
+
 Router.use(JWT.VerifyToken);
+
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
 Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.CreateSlotsController);
