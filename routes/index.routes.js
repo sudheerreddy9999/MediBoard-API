@@ -40,7 +40,7 @@ Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.Cre
 Router.get(
   '/slots/doctor',
   AppointementValidations.CheckDoctorId,
-  SlotsController.GetAvilableSlotsByDoctorIdController,
+  SlotsController.GetAllSlotsByDoctorIdController,
 );
 Router.post(
   '/appointments',

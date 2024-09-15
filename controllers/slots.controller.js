@@ -43,6 +43,6 @@ const CreateSlotsController = async (request, response) => {
   }
 };
 
-const SlotsController = { GetAvilableSlotsByDoctorIdController, CreateSlotsController };
+const SlotsController = { GetAvilableSlotsByDoctorIdController, CreateSlotsController, GetAllSlotsByDoctorIdController };
 
 export default SlotsController;
