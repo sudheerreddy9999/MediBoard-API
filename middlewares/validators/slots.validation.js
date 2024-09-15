@@ -2,7 +2,8 @@ import { body, validationResult } from 'express-validator';
 
 const validateSlotCreation = [
   body('doctor_id').isInt().withMessage('Doctor ID must be an integer').notEmpty().withMessage('Doctor ID is required'),
-
+  body('description').trim().notEmpty().withMessage('Enter valid description'),
+  body('title').trim().notEmpty().withMessage('Enter valid title'),
   body('available_slots')
     .isInt({ min: 1 })
     .withMessage('Available slots must be a positive integer')

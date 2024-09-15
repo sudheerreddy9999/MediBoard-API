@@ -21,10 +21,26 @@ const GetAvilableSlotsByDoctorIdService = async (request) => {
   }
 };
 
+const GetAllSlotsByDoctorIdService = async (request) => {
+  try {
+    const { doctor_id } = request.headers;
+
+    const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
+    if (doctorData.length === 0) {
+      return customExceptionMessage(404, 'Doctor not found with given id');
+    }
+    const data = await SlotsDTO.GetAllSlotsByDoctorIdDTO(doctor_id);
+    return data;
+  } catch (error) {
+    logger.error({ GetAllSlotsByDoctorIdService: error.message });
+    throw new Error(error.message);
+  }
+};
+
 const CreateSlotsService = async (request) => {
   try {
     const created_by = request.employee_id;
-    const { doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
+    const {description, title, doctor_id, available_slots, slot_date, slot_time, slot_end_time } = request.body;
 
     const doctorData = await DoctorsDto.GetDoctroByIdDTO(doctor_id);
     if (doctorData.length === 0) {
@@ -35,6 +51,7 @@ const CreateSlotsService = async (request) => {
       return customExceptionMessage(409, 'slot already booked');
     }
     const data = await SlotsDTO.CreateSlotsDTO(
+      description, title,
       doctor_id,
       available_slots,
       slot_date,
@@ -49,6 +66,6 @@ const CreateSlotsService = async (request) => {
   }
 };
 
-const SlotsService = { GetAvilableSlotsByDoctorIdService, CreateSlotsService };
+const SlotsService = { GetAvilableSlotsByDoctorIdService, CreateSlotsService, GetAllSlotsByDoctorIdService };
 
 export default SlotsService;

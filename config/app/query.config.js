@@ -20,6 +20,7 @@ const QUERY = {
   GET_APPOINTMENTS_BY_DATE: properties.get('query.get_appointments_by_date'),
   GET_APPOINTMENTS_FOR_USER__CURRENTDATE: properties.get('query.get_appointments_for_user__currentdate'),
   GET_CURRENT_APPOINTMENT_QUEUE: properties.get('query.get_current_appointment_queue'),
+  GET_SLOTS_BY_DOCTOR_ID:properties.get('query.get_slots_by_doctor_id')
 };
 
 const DB = { QUERY };

@@ -127,8 +127,8 @@ paths:
     get:
       tags:
         - Slots
-      description: To get all slots
-      operationId: getSlots
+      description: To get avilable slots by doctorid
+      operationId: getAvilableSlotsByDoctorId
       parameters:
         - name: doctor_id
           in: header
@@ -153,6 +153,23 @@ paths:
       responses:
         200:
           description: Slot added sucessfully
+  /slots/doctor:
+    get:
+      tags:
+        - Slots
+      description: To get all doctor slots
+      operationId: getAllDoctorSlots
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: doctor_id
+          in: header
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: request successfull
   /appointments/current-queue:
     get:
       tags:
@@ -160,10 +177,10 @@ paths:
       description: To get appointments current queue
       operationId: getAppointmentQueue
       parameters:
-        - name: doctor_id 
+        - name: doctor_id
           in: header
           required: true
-          schema: 
+          schema:
             type: integer
       responses:
         200:
@@ -275,6 +292,10 @@ components:
     addSlot:
       type: object
       properties:
+        description: 
+          type: string
+        title: 
+          type: string
         doctor_id:
           type: integer
         available_slots:
