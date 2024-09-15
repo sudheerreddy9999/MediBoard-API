@@ -38,6 +38,7 @@ const GetAllSlotsByDoctorIdService = async (request) => {
       const endDate = formatDateTime(d.slot_date, d.slot_end_time);
       return {
         slot_id: d.slot_id,
+        available_slots:d.available_slots,
         title: d.title,
         description: d.description,
         start: startDate,
