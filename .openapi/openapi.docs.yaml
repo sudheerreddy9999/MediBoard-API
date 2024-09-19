@@ -102,7 +102,7 @@ paths:
       requestBody:
         description: To add Doctor details
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: "#/components/schemas/addDoctor"
       responses:
@@ -342,6 +342,9 @@ components:
     addDoctor:
       type: object
       properties:
+        image:
+          type: string
+          format: binary
         name:
           type: string
         email:

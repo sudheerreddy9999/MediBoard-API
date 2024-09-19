@@ -39,7 +39,19 @@ const GetDoctorsService = async (request) => {
 const GetAllDoctorsService = async () => {
   try {
     const data = await DoctorsDto.GetAllDoctorsDTO();
-    return data;
+    console.log(data[0])
+    const doctorData =data.map(data => { return {
+      doctor_id: data.doctor_id,
+      image: data.image ? data.image.toString('base64'): null,
+      image_ext: data.image_ext,
+      name: data.name,
+      email: data.email,
+      mobile_number: data.mobile_number,
+      age: data.age,
+      dob: data.dob,
+      specialization: data.specialization,
+    };})
+    return doctorData;
   } catch (error) {
     logger.error({ GetAllDoctorsService: error.message });
     throw new Error(error.message);
@@ -50,6 +62,8 @@ const PostDoctorService = async (request) => {
   try {
     const created_by = request.employee_id;
     const { name, dob, email, specialization, mobile_number, password } = request.body;
+    const image = request.file.buffer;
+    const fileName = request.file.originalname.split('.').pop();
     const userRole = request.role;
     if (userRole !== 'admin') {
       return customExceptionMessage(401, 'Not Authorized add Doctor');
@@ -65,6 +79,8 @@ const PostDoctorService = async (request) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await DoctorsDto.AddDoctorDTO(
       name,
+      image,
+      fileName,
       dob,
       email,
       specialization,

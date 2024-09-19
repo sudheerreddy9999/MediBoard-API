@@ -12,6 +12,9 @@ import DoctorValidations from '../middlewares/validators/doctor.validation.js';
 import SlotsController from '../controllers/slots.controller.js';
 import SlotsValidations from '../middlewares/validators/slots.validation.js';
 import AppointementValidations from '../middlewares/validators/appointment.validation.js';
+import multer from 'multer';
+
+const upload = multer({storage: multer.memoryStorage()});
 
 const Router = express.Router();
 
@@ -43,7 +46,7 @@ Router.use(JWT.VerifyToken);
 
 Router.post('/employee', employeeValidations.addEmployeeCheck, EmployeeController.AddNewEmployeeController);
 
-Router.post('/doctors', DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
+Router.post('/doctors', upload.single('image'), DoctorValidations.PostDoctor, DoctorsControllers.PostDoctorController);
 
 Router.post('/slots', SlotsValidations.validateSlotCreation, SlotsController.CreateSlotsController);
 
