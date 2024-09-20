@@ -1,9 +1,7 @@
 'use strict';
 import PropertiesReader from 'properties-reader';
 
-//let filePropertyPath = './config/env/config.properties';
-
-let filePropertyPath = '../etc/secrets/config.properties'
+const filePropertyPath = './config/env/config.properties';
 
 const properties = PropertiesReader(filePropertyPath);
 

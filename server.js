@@ -57,7 +57,7 @@ fs.readdir(directoryPath, (err, files) => {
 
 const StartServer = () => {
   try {
-    app.listen(AppConfig.PORT, () => {
+    app.listen(AppConfig.PORT || 3000, () => {
       logger.info(`${AppConfig.APPNAME} is listening on port ${AppConfig.PORT}`);
     });
   } catch (error) {
