@@ -13,10 +13,11 @@ const GenerateToken = (data) => {
 
 const VerifyToken = (request, response, next) => {
   try {
-    const token = request.get('Authorization').split(' ')[1];
+    let  token = request.get('Authorization');
     if (!token) {
       return response.status(401).json({ message: 'Not Authorized' });
     }
+    token = request.get('Authorization').split(' ')[1]
     const decodedToken = jwt.verify(token, AppConfig.JWTSECRETKEY);
     request.employee_id = decodedToken.employeeId;
     request.role = decodedToken.role.trim();
