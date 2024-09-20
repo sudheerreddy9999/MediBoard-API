@@ -40,7 +40,7 @@ const databaseConnection = async () => {
 
 
 // Specify the directory you want to check (replace 'your_directory_here' with the actual folder name)
-const directoryPath = path.join(process.cwd(), '/'); // Adjust if needed
+const directoryPath = path.join(process.cwd(), '../'); // Adjust if needed
 
 // Read the files in the directory
 fs.readdir(directoryPath, (err, files) => {
