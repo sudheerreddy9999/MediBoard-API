@@ -9,6 +9,12 @@ const sequelize = new Sequelize({
   password: properties.get('db.pgsql.password'),
   database: properties.get('db.pgsql.database'),
   port: properties.get('db.pgsql.port'),
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false // This is typically needed if the server uses self-signed SSL certificates
+    },
+  },
   pool: {
     max: 10,
     min: 1,
