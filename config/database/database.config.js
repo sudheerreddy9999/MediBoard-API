@@ -3,11 +3,13 @@ import properties from '../index.config.js';
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
+
+const dbpassword = properties.get('db.pgsql.password').split('lokesh')
 const sequelize = new Sequelize({
   dialect: properties.get('db.pgsql.dialect') || process.env.PGSQL_DIALECT,
   host: properties.get('db.pgsql.host') || process.env.PGSQL_HOST,
   username: properties.get('db.pgsql.username') || process.env.PGSQL_USERNAME,
-  password: properties.get('db.pgsql.password') || process.env.PGSQL_PASSWORD,
+  password: dbpassword[1] || process.env.PGSQL_PASSWORD,
   database: properties.get('db.pgsql.database') || process.env.PGSQL_DATABASE,
   port: properties.get('db.pgsql.port') || process.env.PGSQL_PORT,
   dialectOptions: {
