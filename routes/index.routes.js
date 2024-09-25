@@ -1,7 +1,7 @@
 'use strict';
 
 import express from 'express';
-import AuthController from '../controllers/auth.controller.js';
+import UserController from '../controllers/user.controller.js';
 import EmployeeController from '../controllers/employee.controller.js';
 import JWT from '../middlewares/jwt.middleware.js';
 import validators from '../middlewares/validators/auth.validation.js';
@@ -13,14 +13,15 @@ import SlotsController from '../controllers/slots.controller.js';
 import SlotsValidations from '../middlewares/validators/slots.validation.js';
 import AppointementValidations from '../middlewares/validators/appointment.validation.js';
 import multer from 'multer';
+import UserValidations from '../middlewares/validators/user.validation.js';
 
 const upload = multer({storage: multer.memoryStorage()});
 
 const Router = express.Router();
 
-Router.get('/auth', validators.loginValidation, AuthController.GetAuthController);
+Router.get('/user/auth', UserValidations.UserloginValidation, UserController.GetAuthController);
 
-Router.post('/add', AuthController.AddNewUser);
+Router.post('/user/add', UserValidations.addUserCheck, UserController.AddNewUserController);
 
 Router.post(
   '/appointments/guest',
