@@ -50,6 +50,7 @@ const GetAllDoctorsService = async () => {
       age: data.age,
       dob: data.dob,
       specialization: data.specialization,
+      description: data.description,
     };})
     return doctorData;
   } catch (error) {
