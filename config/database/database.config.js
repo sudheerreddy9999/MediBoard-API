@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const dbpassword = properties.get('db.pgsql.password').split('lokesh')
+const dbpassword = properties.get('db.pgsql.password').split('HYDSCT')
 const sequelize = new Sequelize({
   dialect: properties.get('db.pgsql.dialect') || process.env.PGSQL_DIALECT,
   host: properties.get('db.pgsql.host') || process.env.PGSQL_HOST,
