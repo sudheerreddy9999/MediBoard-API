@@ -39,7 +39,7 @@ const GetDoctorsService = async (request) => {
 const GetAllDoctorsService = async () => {
   try {
     const data = await DoctorsDto.GetAllDoctorsDTO();
-    console.log(data[0])
+    //console.log(data[0])
     const doctorData =data.map(data => { return {
       doctor_id: data.doctor_id,
       image: data.image ? data.image.toString('base64'): null,
@@ -62,7 +62,7 @@ const GetAllDoctorsService = async () => {
 const PostDoctorService = async (request) => {
   try {
     const created_by = request.employee_id;
-    const { name, dob, email, specialization, mobile_number, password } = request.body;
+    const { name, dob, email, specialization, mobile_number, password, description } = request.body;
     const image = request.file.buffer;
     const fileName = request.file.originalname.split('.').pop();
     const userRole = request.role;
@@ -88,6 +88,7 @@ const PostDoctorService = async (request) => {
       mobile_number,
       hashedPassword,
       created_by,
+      description,
     );
     return result;
   } catch (error) {
