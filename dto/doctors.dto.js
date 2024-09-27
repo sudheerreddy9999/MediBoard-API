@@ -40,10 +40,10 @@ const GetDoctroByIdDTO = async (doctor_id) => {
   }
 };
 
-const AddDoctorDTO = async (name, image, image_ext, dob, email, specialization, mobile_number, password, created_by) => {
+const AddDoctorDTO = async (name, image, image_ext, dob, email, specialization, mobile_number, password, created_by, description) => {
   try {
     const query = DB.QUERY.POST_DOCTOR;
-    const replacements = { name, image,image_ext, dob, email, specialization, mobile_number, password, created_by };
+    const replacements = { name, image,image_ext, dob, email, specialization, mobile_number, password, created_by , description};
     const data = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.INSERT });
     return data;
   } catch (error) {
