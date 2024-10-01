@@ -37,13 +37,13 @@ const GetAppointmentByIdController = async (request, response) => {
     if (data.errorCode) {
       return response.status(data.errorCode).json({ message: data.errorMessage });
     } else {
-      return response.status(200).json({ message: 'Okay request sucessfull', appointment: data});
+      return response.status(200).json({ message: 'Okay request sucessfull', appointment: data });
     }
   } catch (error) {
     logger.error({ GetAppointmentByIdController: error.message });
     return response.status(500).json({ message: 'Internal Server Error' });
   }
-}
+};
 
 const GetCurrentAppointmentQueueController = async (request, response) => {
   try {
@@ -97,6 +97,30 @@ const UpdateAppointmentTestStatusController = async (request, response) => {
   }
 };
 
+const GetAppointmentByUserIdController = async (request, response) => {
+  try {
+    const data = await AppointmentsService.GetAppointmentByUserIdService(request);
+    return response.status(200).json({ message: 'Okay request is successfull', data: data });
+  } catch (error) {
+    logger.error({ GetAppointmentByUserIdController: error.message });
+    return response.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+const GetAppointmentSearchController = async (request, response) => {
+  try {
+    const data = await AppointmentsService.GetAppointmentSearchService(request);
+    if (data.errorCode) {
+      return response.status(data.errorCode).json({ message: data.errorMessage });
+    } else {
+      return response.status(200).json({ message: 'Okay request is successfull', data: data });
+    }
+  } catch (error) {
+    logger.error({ GetAppointmentSearchController: error.message });
+    return response.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 const AppointmentsController = {
   AddAppointmentController,
   GetAppointmentsByDateController,
@@ -104,6 +128,8 @@ const AppointmentsController = {
   UpdateAppointmentCancelStatusController,
   UpdateAppointmentCompletedStatusController,
   UpdateAppointmentTestStatusController,
-  GetAppointmentByIdController
+  GetAppointmentByIdController,
+  GetAppointmentByUserIdController,
+  GetAppointmentSearchController,
 };
 export default AppointmentsController;

@@ -10,11 +10,32 @@ tags:
   - name: Doctor
   - name: Slots
 paths:
+  /user/auth:
+    get:
+      tags:
+        - user
+      description: To-verify-User-Login
+      operationId: UserLogin
+      parameters:
+        - name: email
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Login success
   /employee/auth:
     get:
       tags:
         - Employee
       description: To-verify-Employe-Login
+      operationId: EmployeeLogin
       parameters:
         - name: email
           in: header
@@ -265,6 +286,39 @@ paths:
       responses:
         200:
           description: appointements
+  /appointments/user:
+    get:
+      tags:
+        - Appointments
+      description: Get appointements by user_id
+      operationId: getAppointmentByUserId
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: appointements
+  /appointments/search:
+    get:
+      tags:
+        - Appointments
+      description: Get appointements by email or mobile_number
+      operationId: getAppointmentSearch
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: mobile_number
+          in: header
+          required: false
+          schema:
+            type: integer
+        - name: email
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: appointements
   /appointments/complete:
     patch:
       tags:
@@ -357,7 +411,7 @@ components:
           type: string
         specialization:
           type: string
-        description: 
+        description:
           type: string
     addSlot:
       type: object

@@ -92,30 +92,59 @@ const GetAppointmentByIdDTO = async (appointment_id) => {
   }
 };
 
-const UpdateAppointmentStatusDTO = async (appointment_id,status) => {
+const UpdateAppointmentStatusDTO = async (appointment_id, status) => {
   try {
     const query = DB.QUERY.UPDATE_APPOINTMENT_STATUS;
-    const replacements = {appointment_id,status}
-    console.log(replacements)
-    const result = await pgsql.query(query, {replacements, type: pgsql.QueryTypes.UPDATE})
-    return result
+    const replacements = { appointment_id, status };
+    console.log(replacements);
+    const result = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.UPDATE });
+    return result;
   } catch (error) {
     logger.error({ UpdateAppointmentStatusDTO: error.message });
     throw new Error(error.message);
   }
-}
+};
 
 const UpdateAppointmentTestStatusDTO = async (appointment_id) => {
   try {
     const query = DB.QUERY.UPDATE_APPOINTMENT_TEST_STATUS;
-    const replacements = {appointment_id}
-    const result = await pgsql.query(query, {replacements, type: pgsql.QueryTypes.UPDATE})
-    return result
+    const replacements = { appointment_id };
+    const result = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.UPDATE });
+    return result;
   } catch (error) {
     logger.error({ UpdateAppointmentTestStatusDTO: error.message });
     throw new Error(error.message);
   }
-}
+};
+
+const GetAppointmentByUserIdDTO = async (user_id) => {
+  try {
+    const query = DB.QUERY.GET_APPOINTEMENT_BY_USER_ID;
+    const replacements = {
+      user_id,
+    };
+    const rData = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.SELECT });
+    return rData;
+  } catch (error) {
+    logger.error({ GetAppointmentByUserIdDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const GetAppointmentsSearchDTO = async (email, mobile_number) => {
+  try {
+    const query = DB.QUERY.GET_APPOINTEMENT_SEARCH;
+    const replacements = {
+      email: email ? email : null,
+      mobile_number: mobile_number ? mobile_number : null,
+    };
+    const rData = await pgsql.query(query, { replacements, type: pgsql.QueryTypes.SELECT });
+    return rData;
+  } catch (error) {
+    logger.error({ GetAppointmentSearchDTO: error.message });
+    throw new Error(error.message);
+  }
+};
 
 const AppointmentsDto = {
   PostNewAppointment,
@@ -126,6 +155,8 @@ const AppointmentsDto = {
   UpdateAppointmentStatusDTO,
   UpdateAppointmentTestStatusDTO,
   GetAppointmentByIdDTO,
+  GetAppointmentsSearchDTO,
+  GetAppointmentByUserIdDTO,
 };
 
 export default AppointmentsDto;

@@ -44,6 +44,30 @@ const validateAppointmentCreation = [
   },
 ];
 
+const CheckSearch = [
+  header('mobile_number')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isNumeric()
+    .withMessage('Mobile number must contain only numbers')
+    .isLength({ min: 10, max: 10 })
+    .withMessage('Mobile number must be 10 digits'),
+
+  // Validate email: must be a valid email format
+  header('email').optional({ values: 'falsy' }).trim().isEmail().withMessage('Email must be a valid email address'),
+  (request, response, next) => {
+    const errors = validationResult(request);
+    const { email, mobile_number } = request.headers;
+    if (!email && !mobile_number) {
+      return response.status(400).json({ message: 'atleast one feild is required for search' });
+    }
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ message: errors.array() });
+    }
+    next();
+  },
+];
+
 const CheckDoctorId = [
   header('doctor_id')
     .isInt()
@@ -79,13 +103,14 @@ const CheckAppointmentId = [
     }
     next();
   },
-]
+];
 
 const AppointementValidations = {
   validateAppointmentCreation,
   CheckAppointmentDate,
   CheckDoctorId,
   CheckAppointmentId,
+  CheckSearch,
 };
 
 export default AppointementValidations;

@@ -15,7 +15,7 @@ import AppointementValidations from '../middlewares/validators/appointment.valid
 import multer from 'multer';
 import UserValidations from '../middlewares/validators/user.validation.js';
 
-const upload = multer({storage: multer.memoryStorage()});
+const upload = multer({ storage: multer.memoryStorage() });
 
 const Router = express.Router();
 
@@ -83,6 +83,14 @@ Router.patch(
   '/appointments/cancel',
   AppointementValidations.CheckAppointmentId,
   AppointmentsController.UpdateAppointmentCancelStatusController,
+);
+
+Router.get('/appointments/user', AppointmentsController.GetAppointmentByUserIdController);
+
+Router.get(
+  '/appointments/search',
+  AppointementValidations.CheckSearch,
+  AppointmentsController.GetAppointmentSearchController,
 );
 
 export default Router;

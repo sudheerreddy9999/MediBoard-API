@@ -94,9 +94,9 @@ const UpdateAppointmentCompletedStatusService = async (request) => {
     if (!role) {
       return customExceptionMessage(401, 'you are not authorized to ');
     }
-    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
-    if(appointment.length === 0){
-      return customExceptionMessage(404, 'appointment not found')
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id);
+    if (appointment.length === 0) {
+      return customExceptionMessage(404, 'appointment not found');
     }
     const data = await AppointmentsDto.UpdateAppointmentStatusDTO(appointment_id, 'completed');
     return data;
@@ -113,9 +113,9 @@ const UpdateAppointmentCancelStatusService = async (request) => {
     if (!role) {
       return customExceptionMessage(401, 'you are not authorized to ');
     }
-    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
-    if(appointment.length === 0){
-      return customExceptionMessage(404, 'appointment not found')
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id);
+    if (appointment.length === 0) {
+      return customExceptionMessage(404, 'appointment not found');
     }
     const data = await AppointmentsDto.UpdateAppointmentStatusDTO(appointment_id, 'cancel');
     return data;
@@ -130,16 +130,42 @@ const UpdateAppointmentTestStatusService = async (request) => {
     const { appointment_id } = request.headers;
     const role = request.role;
     if (!role) {
-      return customExceptionMessage(401, 'you are not authorized to ');
+      return customExceptionMessage(401, 'you are not authorized');
     }
-    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id)
-    if(appointment.length === 0){
-      return customExceptionMessage(404, 'appointment not found')
+    const appointment = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id);
+    if (appointment.length === 0) {
+      return customExceptionMessage(404, 'appointment not found');
     }
     const data = await AppointmentsDto.UpdateAppointmentTestStatusDTO(appointment_id);
     return data;
   } catch (error) {
     logger.error({ UpdateAppointmentTestStatusService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const GetAppointmentByUserIdService = async (request) => {
+  try {
+    const user_id = request.userId;
+    const data = await AppointmentsDto.GetAppointmentByUserIdDTO(user_id);
+    return data;
+  } catch (error) {
+    logger.error({ GetAppointmentByUserIdService: error.message });
+    throw new Error(error.message);
+  }
+};
+
+const GetAppointmentSearchService = async (request) => {
+  try {
+    const role = request.role;
+    if (!role) {
+      return customExceptionMessage(401, 'you are not authorized');
+    }
+    const { mobile_number, email } = request.headers;
+    const data = await AppointmentsDto.GetAppointmentsSearchDTO(email, mobile_number);
+    return data;
+  } catch (error) {
+    logger.error({ GetAppointmentSearchService: error.message });
     throw new Error(error.message);
   }
 };
@@ -152,6 +178,8 @@ const AppointmentsService = {
   UpdateAppointmentCancelStatusService,
   UpdateAppointmentTestStatusService,
   GetAppointmentByIdService,
+  GetAppointmentByUserIdService,
+  GetAppointmentSearchService,
 };
 
 export default AppointmentsService;
