@@ -28,7 +28,7 @@ const QUERY = {
   POST_APPOINTMENT: properties.get('query.post_appointment'),
   DELETE_APPOINTEMENT: properties.get('query.delete_appointement'),
   GET_APPOINTMENTS_BY_DATE: properties.get('query.get_appointments_by_date'),
-  GET_APPOINTMENTS_FOR_USER__CURRENTDATE: properties.get('query.get_appointments_for_user__currentdate'),
+  GET_APPOINTMENTS_FOR_USER_CURRENTDATE: properties.get('query.get_appointments_for_user_currentdate'),
   GET_CURRENT_APPOINTMENT_QUEUE: properties.get('query.get_current_appointment_queue'),
   UPDATE_APPOINTMENT_STATUS: properties.get('query.update_appointment_status'),
   UPDATE_APPOINTMENT_TEST_STATUS: properties.get('query.update_appointment_test_status'),

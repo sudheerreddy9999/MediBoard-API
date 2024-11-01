@@ -100,7 +100,11 @@ const UpdateAppointmentTestStatusController = async (request, response) => {
 const GetAppointmentByUserIdController = async (request, response) => {
   try {
     const data = await AppointmentsService.GetAppointmentByUserIdService(request);
-    return response.status(200).json({ message: 'Okay request is successfull', data: data });
+    if (data.errorCode) {
+      return response.status(data.errorCode).json({ message: data.errorMessage });
+    } else {
+      return response.status(200).json({ message: 'Okay request is successfull', data: data });
+    }
   } catch (error) {
     logger.error({ GetAppointmentByUserIdController: error.message });
     return response.status(500).json({ message: 'Internal Server Error' });

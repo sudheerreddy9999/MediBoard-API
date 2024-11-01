@@ -39,7 +39,7 @@ const DeleteAppointementDTO = async (appointment_id) => {
 
 const GetCurrentAppointmentsForUserDTO = async (mobile_number, email) => {
   try {
-    const query = DB.QUERY.GET_APPOINTMENTS_FOR_USER__CURRENTDATE;
+    const query = DB.QUERY.GET_APPOINTMENTS_FOR_USER_CURRENTDATE;
     const replacements = {
       mobile_number: mobile_number ? mobile_number : null,
       email: email ? email : null,

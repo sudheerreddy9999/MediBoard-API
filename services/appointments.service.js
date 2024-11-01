@@ -147,6 +147,9 @@ const UpdateAppointmentTestStatusService = async (request) => {
 const GetAppointmentByUserIdService = async (request) => {
   try {
     const user_id = request.userId;
+    if(!user_id){
+      return customExceptionMessage(401, 'you are not authorized');
+    }
     const data = await AppointmentsDto.GetAppointmentByUserIdDTO(user_id);
     return data;
   } catch (error) {
