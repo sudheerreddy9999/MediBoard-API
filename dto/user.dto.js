@@ -16,6 +16,18 @@ const GetUserByEmailDTO = async (email, number) => {
   }
 };
 
+const GetUserByIdDTO = async (user_id) => {
+  try {
+    const query = DB.QUERY.GET_USERBY_ID;
+    const replacements = { user_id };
+    const data = await pgsql.query(query, { type: pgsql.QueryTypes.SELECT, replacements: replacements });
+    return data;
+  } catch (error) {
+    logger.error({ GetUserByIdDTO: error.message });
+    throw new Error(error.message);
+  }
+};
+
 const AddNewUserDTO = async (first_name, last_name, email, password, mobile_number) => {
   try {
     const query = DB.QUERY.ADD_NEW_USER;
@@ -66,6 +78,6 @@ const UserPasswordDTO = async (password, user_id) => {
     throw new Error(error.message);
   }
 };
-const UserDTO = { GetUserByEmailDTO, AddNewUserDTO, UpdateUserDTO };
+const UserDTO = { GetUserByEmailDTO, AddNewUserDTO, UpdateUserDTO, GetUserByIdDTO };
 
 export default UserDTO;

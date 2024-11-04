@@ -23,6 +23,8 @@ Router.get('/user/auth', UserValidations.UserloginValidation, UserController.Get
 
 Router.post('/user/add', UserValidations.addUserCheck, UserController.AddNewUserController);
 
+Router.get('/user/id', UserController.GetUserByIdController);
+
 Router.post(
   '/appointments/guest',
   AppointementValidations.validateAppointmentCreation,

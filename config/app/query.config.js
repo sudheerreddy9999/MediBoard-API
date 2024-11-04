@@ -4,6 +4,7 @@ import properties from '../index.config.js';
 const QUERY = {
   //user
   GET_USER_BY_EMAIL: properties.get('query.get_userbyemail'),
+  GET_USERBY_ID: properties.get('query.get_userby_id'),
   ADD_NEW_USER: properties.get('query.post_newuser'),
   UPDATE_USER: properties.get('query.update_user'),
   CHANGE_USER_PASSWORD: properties.get('query.change_user_password'),

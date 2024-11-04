@@ -21,14 +21,13 @@ const GetAuthService = async (request) => {
     const userData = { userId: data[0].user_id };
     const token = JWT.GenerateToken(userData);
     const userDetails = {
-      token: token,
       userId: data[0].user_id,
       first_name: data[0].first_name,
       last_name: data[0].last_name,
       email: data[0].email,
       mobile_number: data[0].mobile_number,
     };
-    return userDetails;
+    return {token,userDetails};
   } catch (error) {
     logger.error({ GetAuthService: error.message });
     throw new Error(error.message);
@@ -55,6 +54,17 @@ const AddNewUserService = async (request) => {
   }
 };
 
-const UserService = { GetAuthService, AddNewUserService };
+const GetUserByIdService = async (request) => {
+  try {
+    const {user_id} = request.headers;
+    const data = await UserDTO.GetUserByIdDTO(user_id);
+    return data;
+  } catch (error) {
+    logger.error({ GetUserByIdService: error.message });
+    throw new Error(error.message); 
+  }
+}
+
+const UserService = { GetAuthService, AddNewUserService, GetUserByIdService };
 
 export default UserService;

@@ -20,7 +20,7 @@ const AddNewUserController = async (request, response) => {
   try {
     const data = await UserService.AddNewUserService(request);
     if (data.errorCode) {
-      return response.status(data.errorCode).json({ message: data.errorMessage});
+      return response.status(data.errorCode).json({ message: data.errorMessage });
     } else {
       return response.status(200).json({ message: 'User Added Successfully' });
     }
@@ -30,5 +30,15 @@ const AddNewUserController = async (request, response) => {
   }
 };
 
-const UserController = { GetAuthController, AddNewUserController };
+const GetUserByIdController = async (request, response) => {
+  try {
+    const data = await UserService.GetUserByIdService(request);
+    return response.status(200).json({ message: 'Okay Request successfull', data: data });
+  } catch (error) {
+    logger.error({ GetUserByIdController: error.message });
+    response.status(500).json({ message: 'Internal server Error' });
+  }
+};
+
+const UserController = { GetAuthController, AddNewUserController, GetUserByIdController };
 export default UserController;

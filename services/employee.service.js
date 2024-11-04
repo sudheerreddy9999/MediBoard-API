@@ -18,7 +18,7 @@ const GetEmployeeAuthService = async (request) => {
     if (!comparePasssword) {
       return customExceptionMessage(401, 'Invalid password');
     }
-    const userData = {
+    const employeeDetails = {
       employeeId: employeeData[0].employee_id,
       firstName: employeeData[0].first_name,
       email: employeeData[0].email,
@@ -27,7 +27,7 @@ const GetEmployeeAuthService = async (request) => {
       role: employeeData[0].role,
     };
     const token = JWT.GenerateToken(userData);
-    const employeeInfo = { userData, token };
+    const employeeInfo = { employeeDetails, token };
     return employeeInfo;
   } catch (error) {
     console.error(error.message);
