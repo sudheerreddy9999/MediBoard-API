@@ -4,6 +4,7 @@ import EmployeeDto from '../dto/employee.dto.js';
 import JWT from '../middlewares/jwt.middleware.js';
 import customUtility from '../utility/custom.utility.js';
 import bcrypt from 'bcrypt';
+import logger from '../utility/logger.utility.js';
 
 const { customExceptionMessage } = customUtility;
 
@@ -26,11 +27,11 @@ const GetEmployeeAuthService = async (request) => {
       last_name: employeeData[0].last_name,
       role: employeeData[0].role,
     };
-    const token = JWT.GenerateToken(userData);
+    const token = JWT.GenerateToken(employeeDetails);
     const employeeInfo = { employeeDetails, token };
     return employeeInfo;
   } catch (error) {
-    console.error(error.message);
+    logger.info({GetEmployeeAuthService: error.message})
     throw new Error(error.message);
   }
 };

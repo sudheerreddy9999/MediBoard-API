@@ -1,6 +1,7 @@
 'use strict';
 
 import EmployeeService from '../services/employee.service.js';
+import logger from '../utility/logger.utility.js';
 
 const GetEmployeeAuthController = async (request, response) => {
   try {
@@ -13,7 +14,7 @@ const GetEmployeeAuthController = async (request, response) => {
       return response.status(200).json({ message: 'Employee Login success!', data: employeeData });
     }
   } catch (error) {
-    console.error(error.message);
+    logger.error({GetEmployeeAuthController: error.message})
     return response.status(500).json({ message: 'Internal Server Error' });
   }
 };
