@@ -39,7 +39,7 @@ app.get('/health', async (req, res) => {
   const timestamp = customUtility.istTimestamp();
   const message = dbStatus === 'healthy' ? 'OK' : 'NOT OK';
   const healthCheck = {
-    uptime: process.uptime(),
+    uptime: `${(process.uptime() / 60).toFixed(2)} minutes`,
     message,
     timestamp,
     dbStatus: dbStatus,
