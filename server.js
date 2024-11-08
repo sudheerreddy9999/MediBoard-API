@@ -7,6 +7,7 @@ import express from 'express';
 import AppConfig from './config/app/app.config.js';
 import cors from 'cors';
 import helmet from 'helmet';
+import cron from 'node-cron';
 import pgsql from './config/database/database.config.js';
 import Router from './routes/index.routes.js';
 import OpenApi from './utility/swagger.utility.js';
@@ -28,22 +29,22 @@ app.use('/api-docs', OpenApi.serve, OpenApi.docPath);
 app.get('/health', async (req, res) => {
   let dbStatus;
   try {
-    logger.info('Health check initiated for db')
+    logger.info('Health check initiated for db');
     await pgsql.authenticate();
-    dbStatus = 'healthy'
+    dbStatus = 'healthy';
   } catch (error) {
-    dbStatus = 'unhealthy'
+    dbStatus = 'unhealthy';
     logger.error(` database connection faild with ${error.message}`);
   }
-  const timestamp = customUtility.istTimestamp()
-  const message = dbStatus === 'healthy' ? 'OK' : 'NOT OK'
+  const timestamp = customUtility.istTimestamp();
+  const message = dbStatus === 'healthy' ? 'OK' : 'NOT OK';
   const healthCheck = {
     uptime: process.uptime(),
     message,
     timestamp,
     dbStatus: dbStatus,
   };
-  logger.info(`Health check status completed and overall status is ${message}`)
+  logger.info(`Health check status completed and overall status is ${message}`);
   return res.status(200).json({ status: healthCheck });
 });
 
@@ -69,6 +70,9 @@ const StartServer = () => {
     process.exit(-1);
   }
 };
-
+cron.schedule('*/50 * * * * *', () => {
+  logger.info('Running the scheduled task...');
+  authenticateDb();
+});
 databaseConnection();
 StartServer();
