@@ -70,10 +70,10 @@ const StartServer = () => {
     process.exit(-1);
   }
 };
-cron.schedule('*/50 * * * * *', async () => {
-  logger.info('Running the scheduled task...');
-  await pgsql.authenticate();
-  logger.info('scheduled task Completed');
-});
+// cron.schedule('*/50 * * * * *', async () => {
+//   logger.info('Running the scheduled task...');
+//   await pgsql.authenticate();
+//   logger.info('scheduled task Completed');
+// });
 databaseConnection();
 StartServer();
