@@ -75,7 +75,7 @@ cron.schedule('* * * * *', () => {
   logger.info('Running the scheduled task...50Sec');
   setTimeout(() => {
     logger.info('scheduled task Completed');
-  }, 30000);
+  }, 45000); // 50-second delay
 });
 
 databaseConnection();
