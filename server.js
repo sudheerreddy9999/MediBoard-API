@@ -70,9 +70,13 @@ const StartServer = () => {
     process.exit(-1);
   }
 };
-cron.schedule('*/50 * * * * *', async () => {
+
+cron.schedule('* * * * *', () => {
   logger.info('Running the scheduled task...50Sec');
-  logger.info('scheduled task Completed');
+  setTimeout(() => {
+    logger.info('scheduled task Completed');
+  }, 50000); // 50-second delay
 });
+
 databaseConnection();
 StartServer();
