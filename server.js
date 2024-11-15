@@ -48,6 +48,19 @@ app.get('/health', async (req, res) => {
   return res.status(200).json({ status: healthCheck });
 });
 
+app.get('/health/mointor', async (req, res) => {
+  logger.info('Health check initiated by monitor');
+  const timestamp = customUtility.istTimestamp();
+  const message = 'OK';
+  const healthCheck = {
+    uptime: `${(process.uptime() / 60).toFixed(2)} minutes`,
+    message,
+    timestamp,
+  };
+  logger.info(`Health check status completed and overall status is ${message}`);
+  return res.status(200).json({ status: healthCheck });
+});
+
 app.use(Router);
 
 const databaseConnection = async () => {
@@ -71,12 +84,12 @@ const StartServer = () => {
   }
 };
 
-cron.schedule('* * * * *', () => {
-  logger.info('Running the scheduled task...50Sec');
-  setTimeout(() => {
-    logger.info('scheduled task Completed');
-  }, 45000); // 50-second delay
-});
+// cron.schedule('* * * * *', () => {
+//   logger.info('Running the scheduled task...50Sec');
+//   setTimeout(() => {
+//     logger.info('scheduled task Completed');
+//   }, 45000); // 50-second delay
+// });
 
 databaseConnection();
 StartServer();
