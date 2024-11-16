@@ -36,6 +36,7 @@ const QUERY = {
   GET_APPOINTEMENT_BY_ID: properties.get('query.get_appointement_by_id'),
   GET_APPOINTEMENT_BY_USER_ID: properties.get('query.get_appointement_by_user_id'),
   GET_APPOINTEMENT_SEARCH: properties.get('query.get_appointement_search'),
+  GET_APPOINTEMENT_QUEUE: properties.get('query.get_appointement_queue')
 };
 
 const DB = { QUERY };

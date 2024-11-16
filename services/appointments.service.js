@@ -27,6 +27,8 @@ const PostAppointmentServive = async (request) => {
     if (isSlotAvilable[0].booked_slots >= isSlotAvilable[0].available_slots) {
       return customExceptionMessage(409, 'Please select another slot or current slot is unavilable or full');
     }
+    const appointmentQueue = await AppointmentsDto.GetAppointmentQueueDTO(slot_id);
+    const newQueue = appointmentQueue.max_queue + 1;
     const [data] = await AppointmentsDto.PostNewAppointment(
       user_id,
       name,
@@ -36,6 +38,7 @@ const PostAppointmentServive = async (request) => {
       created_by,
       status,
       is_emergency,
+      newQueue,
     );
     appointment_id = data[0].appointment_id;
     if (data) {
@@ -147,7 +150,7 @@ const UpdateAppointmentTestStatusService = async (request) => {
 const GetAppointmentByUserIdService = async (request) => {
   try {
     const user_id = request.userId;
-    if(!user_id){
+    if (!user_id) {
       return customExceptionMessage(401, 'you are not authorized');
     }
     const data = await AppointmentsDto.GetAppointmentByUserIdDTO(user_id);
