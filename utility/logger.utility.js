@@ -10,9 +10,13 @@ const istTimestamp = () => {
 
 // Create Pino logger
 const logger = pino({
-  level: 'info', // Ensure the logging level is set to 'info' or lower to capture 'error' messages
-  timestamp: istTimestamp
+  level: 'info', // Include PID and hostname in logs
+  timestamp: () => `,"time":"${istTimestamp()}"`, // Use custom IST timestamp
+  formatters: {
+    level(label) {
+      return { level: label }; // Output "level" as a string
+    },
+  },
 });
-
 
 export default logger;
