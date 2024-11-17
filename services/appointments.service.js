@@ -4,6 +4,8 @@ import AppointmentsDto from '../dto/appointments.dto.js';
 import SlotsDTO from '../dto/slots.dto.js';
 import customUtility from '../utility/custom.utility.js';
 import logger from '../utility/logger.utility.js';
+import EmailTemplates from '../config/app/email.config.js';
+import sendEmail from '../utility/email.utility.js';
 
 const { customExceptionMessage } = customUtility;
 
@@ -45,6 +47,18 @@ const PostAppointmentServive = async (request) => {
       const booked_slots = isSlotAvilable[0].booked_slots + 1;
       await SlotsDTO.UpdateBookedSlotsDTO(slot_id, booked_slots);
     }
+    const [appointmentData] = await AppointmentsDto.GetAppointmentByIdDTO(appointment_id);
+    const confirmEmailBody = EmailTemplates.AppointmentConfirmationTemplate(
+      appointmentData.patient_name,
+      appointmentData.doctor_name,
+      appointmentData.specialization,
+      appointmentData.slot_date,
+      `'${appointmentData.slot_time}' - '${appointmentData.slot_end_time}'`,
+      appointment_id,
+      appointmentData.appointment_id_queue,
+    );
+    await sendEmail(appointmentData.email, '🩺 Appointment Confirmation ', confirmEmailBody);
+
     return data;
   } catch (error) {
     await AppointmentsDto.DeleteAppointementDTO(appointment_id);
