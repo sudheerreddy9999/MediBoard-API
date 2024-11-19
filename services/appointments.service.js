@@ -13,7 +13,7 @@ const PostAppointmentServive = async (request) => {
   let appointment_id;
   try {
     const created_by = request.userId ? request.userId : request.employee_id;
-    let { user_id, name, mobile_number, email, slot_id, is_emergency } = request.body;
+    let { user_id, name, mobile_number, email, slot_id, is_emergency, age, sex } = request.body;
     user_id = request.userId;
     if (!user_id) {
       const userAppointments = await AppointmentsDto.GetCurrentAppointmentsForUserDTO(mobile_number, email);
@@ -41,6 +41,8 @@ const PostAppointmentServive = async (request) => {
       status,
       is_emergency,
       newQueue,
+      age, 
+      sex
     );
     appointment_id = data[0].appointment_id;
     if (data) {
@@ -84,8 +86,8 @@ const GetAppointmentsByDateService = async (request) => {
 
 const GetCurrentAppointmentQueueService = async (request) => {
   try {
-    const { doctor_id } = request.headers;
-    const data = await AppointmentsDto.GetCurrentAppointmentQueueDTO(doctor_id);
+    const { slot_id } = request.headers;
+    const data = await AppointmentsDto.GetCurrentAppointmentQueueDTO(slot_id);
     return data;
   } catch (error) {
     logger.error({ GetCurrentAppointmentQueueService: error.message });

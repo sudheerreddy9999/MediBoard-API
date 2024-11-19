@@ -34,6 +34,8 @@ const validateAppointmentCreation = [
     .optional({ values: 'falsy' })
     .isIn(['Y', 'N'])
     .withMessage('is_emergency must be either "Y" or "N"'),
+  body('age').trim().optional({ values: 'falsy' }).isInt().withMessage('Enter Valid Age'),
+  body('sex').trim().optional({ values: 'falsy' }).isIn(['M', 'F', 'T', 'N']).withMessage('Enter valid Sex'),
 
   (request, response, next) => {
     const errors = validationResult(request);
@@ -105,10 +107,26 @@ const CheckAppointmentId = [
   },
 ];
 
+const CheckSlotId = [
+  header('slot_id')
+    .isInt()
+    .withMessage('Slot ID must be an integer')
+    .notEmpty()
+    .withMessage('Slot ID is required'),
+  (request, response, next) => {
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ message: errors.array() });
+    }
+    next();
+  },
+];
+
 const AppointementValidations = {
   validateAppointmentCreation,
   CheckAppointmentDate,
   CheckDoctorId,
+  CheckSlotId,
   CheckAppointmentId,
   CheckSearch,
 };

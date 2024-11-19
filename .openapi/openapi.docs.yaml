@@ -213,7 +213,7 @@ paths:
       description: To get appointments current queue
       operationId: getAppointmentQueue
       parameters:
-        - name: doctor_id
+        - name: slot_id
           in: header
           required: true
           schema:

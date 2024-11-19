@@ -41,7 +41,7 @@ Router.get('/slots', AppointementValidations.CheckDoctorId, SlotsController.GetA
 
 Router.get(
   '/appointments/current-queue',
-  AppointementValidations.CheckDoctorId,
+  AppointementValidations.CheckSlotId,
   AppointmentsController.GetCurrentAppointmentQueueController,
 );
 

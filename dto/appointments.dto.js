@@ -2,20 +2,32 @@
 import DB from '../config/app/query.config.js';
 import pgsql from '../config/database/database.config.js';
 import logger from '../utility/logger.utility.js';
-import {QueryTypes} from 'sequelize'
+import { QueryTypes } from 'sequelize';
 
 const GetAppointmentQueueDTO = async (slot_id) => {
   try {
     const query = DB.QUERY.GET_APPOINTEMENT_QUEUE;
-    const replacements = {slot_id};
-    const [result] = await pgsql.query(query, {type: QueryTypes.SELECT, replacements: replacements });
+    const replacements = { slot_id };
+    const [result] = await pgsql.query(query, { type: QueryTypes.SELECT, replacements: replacements });
     return result;
   } catch (error) {
     logger.error({ PostNewAppointment: error.message });
     throw new Error(error.message);
   }
-}
-const PostNewAppointment = async (user_id, name, mobile_number, email, slot_id, created_by, status, is_emergency, appointment_id_queue) => {
+};
+const PostNewAppointment = async (
+  user_id,
+  name,
+  mobile_number,
+  email,
+  slot_id,
+  created_by,
+  status,
+  is_emergency,
+  appointment_id_queue,
+  age,
+  sex,
+) => {
   try {
     const query = DB.QUERY.POST_APPOINTMENT;
     const replacements = {
@@ -27,7 +39,9 @@ const PostNewAppointment = async (user_id, name, mobile_number, email, slot_id, 
       created_by: created_by ? created_by : 'guest',
       status: status,
       is_emergency: is_emergency ? is_emergency : 'N',
-      appointment_id_queue:appointment_id_queue
+      appointment_id_queue: appointment_id_queue,
+      age: age ? age : 0,
+      sex: sex ? sex : 'N',
     };
     const data = await pgsql.query(query, { type: QueryTypes.INSERT, replacements: replacements });
     return data;
@@ -79,10 +93,10 @@ const GetAppointmentsByDateDTO = async (created_date) => {
   }
 };
 
-const GetCurrentAppointmentQueueDTO = async (doctor_id) => {
+const GetCurrentAppointmentQueueDTO = async (slot_id) => {
   try {
     const query = DB.QUERY.GET_CURRENT_APPOINTMENT_QUEUE;
-    const replacements = { doctor_id };
+    const replacements = { slot_id };
 
     const data = await pgsql.query(query, { replacements, type: QueryTypes.SELECT });
     return data;
