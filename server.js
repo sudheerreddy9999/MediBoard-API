@@ -44,8 +44,13 @@ app.get('/health', async (req, res) => {
     timestamp,
     dbStatus: dbStatus,
   };
-  logger.info(`Health check status completed and overall status is ${message}`);
-  return res.status(200).json({ status: healthCheck });
+    if (message === 'OK') {
+    logger.info(`Health check status completed and overall status is ${message}`);
+    return res.status(200).json({ status: healthCheck });
+  } else {
+    logger.error(`Health check status completed and overall status is ${message}`);
+    return res.status(503).json({ status: healthCheck });
+  }
 });
 
 app.get('/health/mointor', async (req, res) => {
